@@ -71,6 +71,11 @@ app.get('/movies/get/by-title', function(req, res) {
     res.status(200).send(movies);
 });
 
+app.get('/movies/get/id/:id', function(req, res) {
+    if(req.params.id <= 0 || req.params.id > movies.length){res.status(404).send("The movie " + req.params.id + " Doesn't Exist")}
+    else{res.status(200).send(movies[req.params.id-1])};
+});
+
 //Updating move database
 app.get('/movies/update', function(req, res) {
     res.status(200).send("Update")
