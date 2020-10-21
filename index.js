@@ -98,6 +98,60 @@ app.get('/movies/update', function(req, res) {
     res.status(200).send("Update")
 });
 
+app.get("/movies/update/:id", function (req, res) {
+    if(req.params.id <= 0 || req.params.id > movies.length){
+      res.status(404).send("the movie " + req.params.id + " does not exist");
+    } 
+    else if((req.query.title == "" && req.query.year == "") || (typeof req.query.title === "undefined" && typeof req.query.year === "undefined")){
+        movies[req.params.id - 1] = {
+            title: movies[req.params.id - 1].title,
+            year: movies[req.params.id - 1].year,
+            rating: req.query.rating,
+        };
+    } 
+    else if((req.query.title == "" && req.query.rating == "") || (typeof req.query.title === "undefined" && typeof req.query.rating === "undefined")){
+        movies[req.params.id - 1] = {
+            title: movies[req.params.id - 1].title,
+            year: req.query.year,
+            rating: movies[req.params.id - 1].rating,
+        };
+    } 
+    else if((req.query.year=="" && req.query.rating == "") || (typeof req.query.year === "undefined" && typeof req.query.rating==="undefined")){
+        movies[req.params.id - 1] = {
+            title: req.query.title,
+            year: movies[req.params.id - 1].year,
+            rating: movies[req.params.id - 1].rating,
+        };
+    } 
+    else if(req.query.title == "" || typeof req.query.title === "undefined"){
+        movies[req.params.id - 1] = {
+            title: movies[req.params.id - 1].title,
+            year: req.query.year,
+            rating: req.query.rating,
+        };
+    } 
+    else if(req.query.year == "" || typeof req.query.year === "undefined") {
+        movies[req.params.id - 1] = {
+            title: req.query.title,
+            year: movies[req.params.id - 1].year,
+            rating: req.query.rating,
+        };
+    } 
+    else if(req.query.rating == "" || typeof req.query.rating === "undefined"){
+        movies[req.params.id - 1] = {
+            title: req.query.title,
+            year: req.query.year,
+            rating: movies[req.params.id - 1].rating,
+        };
+    } 
+    else{
+        movies[req.params.id - 1].title = req.query.title;
+        movies[req.params.id - 1].year = req.query.year;
+        movies[req.params.id - 1].rating = req.query.rating;
+    }
+    res.status(200).send(movies);
+  });
+
 //Removing from database
 
 app.get('/movies/delete', function(req, res) {
