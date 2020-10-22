@@ -94,7 +94,7 @@ app.get('/movies/get/id/:id', function(req, res) {
 
 //Updating move database
 
-app.get('/movies/update', function(req, res) {
+app.put('/movies/update', function(req, res) {
     res.status(200).send("Update")
 });
 
@@ -106,7 +106,7 @@ app.put("/movies/update/:id", function (req, res) {
         movies[req.params.id - 1] = {
             title: movies[req.params.id - 1].title,
             year: movies[req.params.id - 1].year,
-            rating: req.query.rating,
+            rating: movies[req.params.id -1].rating,
         };
     } 
     else if((req.query.title == "" && req.query.rating == "") || (typeof req.query.title === "undefined" && typeof req.query.rating === "undefined")){
@@ -154,7 +154,7 @@ app.put("/movies/update/:id", function (req, res) {
 
 //Removing from database
 
-app.get('/movies/delete', function(req, res) {
+app.delete('/movies/delete', function(req, res) {
     res.status(200).send("Delete")
 });
 
